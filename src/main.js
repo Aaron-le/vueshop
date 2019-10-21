@@ -3,9 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { Button } from 'vant'
-Vue.use(Button)
-
+import axios from 'axios'
+import { Button, Row, Col, Search, Swipe, SwipeItem, Lazyload } from 'vant'
+Vue.use(Button).use(Row).use(Col).use(Search).use(Swipe).use(SwipeItem).use(Lazyload)
+Vue.prototype.$http=axios
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
