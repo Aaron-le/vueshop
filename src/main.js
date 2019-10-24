@@ -5,10 +5,15 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import { Button, Row, Col, Search, Swipe, SwipeItem, Lazyload } from 'vant'
-Vue.use(Button).use(Row).use(Col).use(Search).use(Swipe).use(SwipeItem).use(Lazyload)
-Vue.prototype.$http=axios
-Vue.config.productionTip = false
 
+import filters from '@/filters/filter'
+Vue.use(Button).use(Row).use(Col).use(Search).use(Swipe).use(SwipeItem).use(Lazyload)
+Vue.prototype.$http = axios
+Vue.config.productionTip = false
+// 全局方法Vue.filter()统一注册自定义过滤器
+Object.keys(filters).forEach(key => { // 返回filters对象中属性名组成的数组
+  Vue.filter(key, filters[key])
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
