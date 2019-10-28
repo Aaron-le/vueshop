@@ -4,10 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import { Button, Row, Col, Search, Swipe, SwipeItem, Lazyload } from 'vant'
+import { Button, Row, Col, Search, Swipe, SwipeItem, Lazyload, List } from 'vant'
 
 import filters from '@/filters/filter'
-Vue.use(Button).use(Row).use(Col).use(Search).use(Swipe).use(SwipeItem).use(Lazyload)
+Vue.use(Button).use(Row).use(Col).use(Search).use(Swipe).use(SwipeItem).use(Lazyload).use(List)
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 // 全局方法Vue.filter()统一注册自定义过滤器

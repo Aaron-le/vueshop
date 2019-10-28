@@ -56,6 +56,22 @@
     <floor-component :floorData="floor1" :floorTitle="floorName.floor1"></floor-component>
     <floor-component :floorData="floor2" :floorTitle="floorName.floor2"></floor-component>
     <floor-component :floorData="floor3" :floorTitle="floorName.floor3"></floor-component>
+
+    <!--Hot Area-->
+    <div class="hot-area">
+        <div class="hot-title">热卖商品</div>
+        <div class="hot-goods">
+          <!--这里需要一个list组件-->
+          <van-list>
+            <van-row gutter="20">
+                <van-col span="12" v-for="( item, index) in hotGoods" :key="index">
+                    <goods-info :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></goods-info>
+                </van-col>
+            </van-row>
+        </van-list>
+        </div>
+    </div>
+
   </div>
 </template>
 
@@ -63,6 +79,7 @@
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import floorComponent from '../component/floorComponent'
+import goodsInfo from '../component/goodsInfoComponent'
 export default {
   data () {
     return {
@@ -79,6 +96,7 @@ export default {
       floor2: [],
       floor3: [],
       floorName: [],
+      hotGoods: [],
       swiperOption: {
         slidesPerView: 3 // 每屏显示个数
       }
@@ -87,7 +105,8 @@ export default {
   components: {
     swiper,
     swiperSlide,
-    floorComponent
+    floorComponent,
+    goodsInfo
   },
   created () {
     this.$http
@@ -102,6 +121,7 @@ export default {
           this.floor2 = res.data.data.floor2
           this.floor3 = res.data.data.floor3
           this.floorName = res.data.data.floorName // 楼层名称
+          this.hotGoods = res.data.data.hotGoods // 热卖商品
         }
       })
       .catch(error => {
@@ -174,4 +194,10 @@ export default {
   font-size: 12px;
   text-align: center;
 }
+.hot-area{
+      text-align: center;
+      font-size:14px;
+      height: 1.8rem;
+      line-height:1.8rem;
+  }
 </style>
