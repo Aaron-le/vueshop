@@ -1,7 +1,7 @@
 <template>
     <div>
         <van-nav-bar
-        title="用户注册"
+        title="用户登录"
         left-text="返回"
         left-arrow
         @click-left="goBack"
@@ -26,7 +26,7 @@
             :error-message='passWordMsg'
         />
         <div class="register-button">
-            <van-button type="primary" @click="goRegisterAction" :loading="openLoading" size="large">马上注册</van-button>
+            <van-button type="primary" @click="goLoginAction" :loading="openLoading" size="large">登录</van-button>
         </div>
        </div>
     </div>
@@ -47,14 +47,20 @@ export default {
       isOk: true
     }
   },
+  created () {
+    if (localStorage.userInfo) {
+      Toast.success('您已经登录过了')
+      this.$router.push('/')
+    }
+  },
   methods: {
     goBack () {
       this.$router.go(-1)
     },
-    goRegister () {
+    goLogin () {
       this.openLoading = true
       axios({
-        url: url.registerUser,
+        url: url.login,
         method: 'post',
         data: {
           userName: this.username,
@@ -62,26 +68,29 @@ export default {
         }
       })
         .then(response => {
-          console.log(response)
-          // 如果返回code为200，代表注册成功，我们给用户作Toast提示
-          if (response.data.code === 200) {
-            Toast.success('注册成功')
-            this.$router.push('/')
+          if (response.data.code === 200 && response.data.msg) {
+            return new Promise((resolve, reject) => {
+              localStorage.userInfo = {userName: this.username}
+              setTimeout(() => { resolve() }, 500)
+            }).then(() => {
+              Toast.success('登录成功')
+              this.$router.push('/')
+            }).catch(() => {
+              Toast.fail('登录状态保存失败')
+            })
           } else {
+            Toast.fail('登录失败')
             this.openLoading = false
-            console.log(response.data.message)
-            Toast.fail('注册失败')
           }
-          console.log(response.data.code)
         })
-        .catch((error) => {
+        .catch((err) => {
+          console.log(err)
+          Toast.fail('登录失败')
           this.openLoading = false
-          console.log(error)
-          Toast.fail('注册失败')
         })
     },
-    goRegisterAction () {
-      this.checkForm() && this.goRegister()
+    goLoginAction () {
+      this.goLogin()
     },
     checkForm () {
       var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/

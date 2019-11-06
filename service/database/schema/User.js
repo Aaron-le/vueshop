@@ -11,7 +11,7 @@ const userSchema = new Schema({
   passWord: {type: String},
   creatAt: {type: Date, default: Date.now()},
   lastLoginAt: {type: Date, default: Date.now()}
-})
+}, {collection: 'user'})
 
 userSchema.pre('save', function (next) {
   bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
@@ -23,6 +23,21 @@ userSchema.pre('save', function (next) {
     })
   })
 })
+
+userSchema.methods = {
+// 密码比对方法
+  comparePassword: (_password, password) => {
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(_password, password, (err, isMatch) => {
+        if (!err) {
+          resolve(isMatch)
+        } else {
+          reject(err)
+        }
+      })
+    })
+  }
+}
 
 // 发布模型  映射schema到数据库
 mongoose.model('user', userSchema)
