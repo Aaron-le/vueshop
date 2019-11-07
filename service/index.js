@@ -7,8 +7,10 @@ const cors = require('koa2-cors')
 
 const Router = require('koa-router')
 let userApi = require('./appApi/userApi')
+let goodsApi = require('./appApi/goodsApi')
 let router = new Router()
 router.use('/user', userApi.routes())
+router.use('/goods', goodsApi.routes())
 app.use(bodyParser())
 app.use(cors())
 
