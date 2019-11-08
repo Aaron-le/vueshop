@@ -200,4 +200,8 @@ export default {
       height: 1.8rem;
       line-height:1.8rem;
   }
+  .van-row{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 </style>

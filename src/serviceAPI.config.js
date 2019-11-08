@@ -7,7 +7,8 @@ const url = {
   login: LOCALURL + 'user/login', // 用户登录接口
   getGoodsDetail: LOCALURL + 'goods/getGoodsDetail', // 用户登录接口
   getCategoryList: LOCALURL + 'goods/getCategoryList', // 得到大类信息
-  getCategorySubList: LOCALURL + 'goods/getCategorySubList' // 得到小类信息
+  getCategorySubList: LOCALURL + 'goods/getCategorySubList', // 得到小类信息
+  getGoodsListBycategory: LOCALURL + 'goods/getGoodsListBycategory' // 得到小类商品信息
 }
 
 module.exports = url
